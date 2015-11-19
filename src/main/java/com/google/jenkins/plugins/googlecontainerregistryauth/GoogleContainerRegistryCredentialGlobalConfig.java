@@ -37,11 +37,16 @@ public class GoogleContainerRegistryCredentialGlobalConfig
   private static final String GCR_SERVER = "gcr.io,*.gcr.io";
 
   public GoogleContainerRegistryCredentialGlobalConfig() {
-    oldDescriptor = new GoogleContainerRegistryCredential.DescriptorImpl();
-    if (Strings.isNullOrEmpty(oldDescriptor.getGcrServer())) {
-      load();
-    } else {
-      gcrServer = oldDescriptor.getGcrServer();
+    load();
+    if (oldDescriptor == null) {
+      oldDescriptor = new GoogleContainerRegistryCredential.DescriptorImpl();
+    }
+    if (!Strings.isNullOrEmpty(oldDescriptor.getGcrServer())) {
+      if (Strings.isNullOrEmpty(gcrServer)) {
+        gcrServer = oldDescriptor.getGcrServer();
+        save();
+      }
+      oldDescriptor.deleteConfigFile();
     }
   }
 
@@ -60,7 +65,6 @@ public class GoogleContainerRegistryCredentialGlobalConfig
     gcrServer = json.has("gcrServer") ?
         json.getString("gcrServer") : null;
     save();
-    oldDescriptor.deleteConfigFile();
     return true;
   }
 
@@ -71,6 +75,11 @@ public class GoogleContainerRegistryCredentialGlobalConfig
     return Strings.isNullOrEmpty(gcrServer) ? GCR_SERVER : gcrServer;
   }
 
+  protected Object readResolve() {
+    oldDescriptor = new GoogleContainerRegistryCredential.DescriptorImpl();
+    return this;
+  }
+
   private String gcrServer = null;
-  GoogleContainerRegistryCredential.DescriptorImpl oldDescriptor;
+  transient GoogleContainerRegistryCredential.DescriptorImpl oldDescriptor;
 }
