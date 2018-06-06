@@ -173,12 +173,6 @@ public class GoogleContainerRegistryCredential
     return CredentialsNameProvider.name(getCredentials());
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public DescriptorImpl getDescriptor() {
-    throw new UnsupportedOperationException();
-  }
-
   /**
    * We do not have a descriptor, so that we won't show up in the user interface
    * as a credential that can be explicitly created, so we will not be

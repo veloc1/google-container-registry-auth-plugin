@@ -24,7 +24,7 @@
 
   <artifactId>google-container-registry-auth</artifactId>
   <packaging>hpi</packaging>
-  <version>0.4-SNAPSHOT</version>
+  <version>0.5-SNAPSHOT</version>
 
   <name>Google Container Registry Auth Plugin</name>
   <description>
@@ -91,7 +91,7 @@
       <plugin>
         <groupId>org.jenkins-ci.tools</groupId>
         <artifactId>maven-hpi-plugin</artifactId>
-        <version>1.96</version>
+        <version>1.122</version>
         <extensions>true</extensions>
         <configuration>
           <disabledTestInjection>true</disabledTestInjection>
@@ -159,7 +159,22 @@
       <id>repo.jenkins-ci.org</id>
       <url>http://repo.jenkins-ci.org/public/</url>
     </repository>
+    <repository>
+      <id>repo.jenkins-ci.org-releases</id>
+      <url>http://repo.jenkins-ci.org/releases/</url>
+    </repository>
   </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org-releases</id>
+      <url>http://repo.jenkins-ci.org/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <dependencies>
     <!-- com.google.apis -->
